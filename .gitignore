@@ -1,4 +1,5 @@
 myenv/
+uploads/
 venv/
 __pycache__/
 *.pyc
@@ -221,3 +222,5 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+uploads/
+uploads/

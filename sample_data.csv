@@ -1,0 +1,21 @@
+employee_id,employee_name,department,tasks_completed,hours_worked,salary,performance_score,status
+1,  Alice Johnson ,engineering,45,160,85000,9.2,active
+2,BOB SMITH,marketing,30,150,62000,7.5,active
+3,carol white,engineering,50,175,90000,,active
+4,  David Brown  ,sales,20,140,55000,6.8,inactive
+5,Emma Davis,marketing,35,155,65000,8.1,active
+6,frank miller,engineering,48,168,88000,9.0,active
+7,Grace Lee,hr,25,145,52000,,active
+8,  henry wilson ,sales,15,130,50000,5.5,inactive
+9,Isabella Moore,engineering,52,180,92000,9.5,active
+10,jack taylor,marketing,28,148,60000,7.2,active
+11,Alice Johnson,engineering,45,160,85000,9.2,active
+12,BOB SMITH,marketing,30,150,62000,7.5,active
+13,carol white,engineering,50,175,90000,,active
+14,Liam Anderson,hr,22,142,51000,6.0,active
+15,  mia thomas  ,sales,18,135,,5.9,inactive
+16,Noah Jackson,engineering,47,165,87000,8.8,active
+17,Olivia Harris,marketing,,152,63000,7.8,active
+18,peter martin,sales,25,145,57000,,active
+19,Quinn Garcia,hr,28,148,53000,6.5,active
+20,rachel martinez,engineering,55,185,95000,9.7,active
