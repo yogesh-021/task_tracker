@@ -35,14 +35,14 @@ def register(user:UserCreate, db:Session = Depends(get_db)):
 def login(user:UserLogin, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.username == user.username).first()
 
-    if not db_user or not verify_password(user.password == db_user.hashed_password):
+    if not db_user or not verify_password(user.password,db_user.hashed_pwd):
         raise HTTPException(
             status_code = 401,
             detail = "Invalid username or password"
         )
 
-        access_token = create_access_token(data={"sub": db_user.username})
-        return {"access_token": access_token, "token_type": "bearer"}
+    access_token = create_access_token(data={"sub": db_user.username})
+    return {"access_token": access_token, "token_type": "bearer"}
 
 
 

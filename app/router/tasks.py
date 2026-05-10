@@ -17,7 +17,7 @@ def create_task(task:TaskCreate, db:Session=Depends(get_db), current_user: User 
 
     return new_task
 
-@router.get("/",response_model = [TaskOut])
+@router.get("/",response_model = list[TaskOut])
 def get_all_tasks(skip :int = 0,limit : int = 100,db:Session=Depends(get_db), current_user: User = Depends(get_current_user)):
     tasks = db(Task).filter(Task.creator_id == current_user.id).offset(skip).limit(limit).all()
 
@@ -76,7 +76,7 @@ def delete_task(task_id: int, db: Session = Depends(get_db), current_user: User 
 
 
 @router.put("/{task_id}/assign")
-def assign_task(task_id: int, user_id:int, db: Session = Depends(get_db), current_user: User = Depents(get_current_user)):
+def assign_task(task_id: int, user_id:int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
 
     db_task = db.query(Task).filter(Task.id == task_id, Task.creator_id == current_user.id).first()
     
