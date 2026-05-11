@@ -239,13 +239,13 @@ def apply_transformation(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Transformation failed: {e}")
 
-    # Save transformed data as a new CSV on disk
+
     original_stem = Path(db_task.file_path).stem
     output_filename = f"{original_stem}_{layer}.csv"
     output_path = UPLOAD_DIR / output_filename
     pd.DataFrame(result["data"]).to_csv(output_path, index=False)
 
-    # Persist the output path in the task record
+
     setattr(db_task, f"{layer}_file_path", str(output_path))
     db.commit()
 
