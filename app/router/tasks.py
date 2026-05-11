@@ -243,8 +243,18 @@ def apply_transformation(
     original_stem = Path(db_task.file_path).stem
     output_filename = f"{original_stem}_{layer}.csv"
     pd.DataFrame(result["data"]).to_csv(UPLOAD_DIR / output_filename, index=False)
-
     setattr(db_task, f"{layer}_file_path", output_filename)
+
+    # Gold internally applies silver — save that intermediate file too
+    if layer == "gold" and not db_task.silver_file_path:
+        try:
+            silver_result = transform(str(full_path), "silver")
+            silver_filename = f"{original_stem}_silver.csv"
+            pd.DataFrame(silver_result["data"]).to_csv(UPLOAD_DIR / silver_filename, index=False)
+            db_task.silver_file_path = silver_filename
+        except Exception:
+            pass
+
     db.commit()
 
     result["saved_as"] = output_filename
