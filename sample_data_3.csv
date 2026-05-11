@@ -1,0 +1,21 @@
+ticket_id,assignee,category,priority,resolution_time_hrs,satisfaction_score,reopened,region,status
+1,  Alice Johnson ,billing,high,2.5,4.8,false,north,resolved
+2,BOB SMITH,technical,critical,8.0,3.2,true,south,resolved
+3,carol white,billing,low,1.2,,false,east,resolved
+4,  David Brown  ,technical,high,12.0,2.9,true,west,escalated
+5,Emma Davis,general,medium,3.5,4.5,false,north,resolved
+6,frank miller,technical,critical,6.0,3.8,false,east,resolved
+7,Grace Lee,billing,low,1.5,,false,south,resolved
+8,  henry wilson ,general,medium,5.0,2.5,true,west,escalated
+9,Isabella Moore,technical,high,4.5,4.9,false,north,resolved
+10,jack taylor,billing,low,2.0,4.1,false,east,resolved
+11,Alice Johnson,billing,high,2.5,4.8,false,north,resolved
+12,BOB SMITH,technical,critical,8.0,3.2,true,south,resolved
+13,carol white,billing,low,1.2,,false,east,resolved
+14,Liam Anderson,general,medium,4.0,3.9,false,north,resolved
+15,  mia thomas  ,technical,high,,3.5,true,west,escalated
+16,Noah Jackson,billing,low,1.8,4.3,false,south,resolved
+17,Olivia Harris,general,,150,4.6,false,east,resolved
+18,peter martin,technical,critical,10.0,,true,north,escalated
+19,Quinn Garcia,billing,medium,2.2,4.0,false,west,resolved
+20,rachel martinez,general,low,3.0,4.7,false,south,resolved

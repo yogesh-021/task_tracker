@@ -1,0 +1,21 @@
+project_id,project_name,team_lead,team_size,budget,spent,completion_pct,priority,status
+1,  Alpha Launch ,alice johnson,5,120000,95000,88.5,high,active
+2,BETA REDESIGN,bob smith,3,45000,40000,72.0,medium,active
+3,gamma integration,carol white,7,200000,,100.0,high,completed
+4,  Delta Migration  ,david brown,4,80000,30000,35.0,low,on_hold
+5,Epsilon Analytics,emma davis,6,150000,120000,80.0,high,active
+6,zeta dashboard,frank miller,2,30000,28000,95.0,medium,active
+7,Eta Reporting,grace lee,3,50000,,60.0,low,active
+8,  theta pipeline ,henry wilson,5,90000,10000,12.5,medium,on_hold
+9,Iota Security,isabella moore,8,250000,200000,78.0,critical,active
+10,kappa portal,jack taylor,4,70000,65000,92.0,medium,active
+11,Alice Johnson,engineering,5,120000,95000,88.5,high,active
+12,bob smith,marketing,3,45000,40000,72.0,medium,active
+13,carol white,engineering,7,200000,,100.0,high,completed
+14,Lambda Sync,liam anderson,3,40000,15000,38.0,low,active
+15,  mu forecasting  ,mia thomas,4,60000,,55.0,high,active
+16,Nu Automation,noah jackson,6,130000,110000,85.0,high,active
+17,Omicron Testing,olivia harris,,148,75000,45.0,medium,active
+18,pi compliance,peter martin,5,95000,80000,,low,active
+19,Rho Onboarding,quinn garcia,3,35000,30000,87.0,medium,active
+20,sigma datapipe,rachel martinez,9,300000,270000,90.0,critical,active
