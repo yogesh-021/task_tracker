@@ -1,4 +1,3 @@
-import os
 import uuid
 from datetime import date
 from pathlib import Path
@@ -87,9 +86,8 @@ async def create_task(
         if not file.filename.lower().endswith(".csv"):
             raise HTTPException(status_code=400, detail="Only .csv files are accepted.")
         unique_name = f"{uuid.uuid4()}.csv"
-        save_path = UPLOAD_DIR / unique_name
-        save_path.write_bytes(await file.read())
-        file_path = str(save_path)
+        (UPLOAD_DIR / unique_name).write_bytes(await file.read())
+        file_path = unique_name
 
     new_task = Task(
         title=title,
@@ -136,9 +134,11 @@ def delete_task(
         raise HTTPException(status_code=404, detail="Task not found.")
     if current_user.role != "admin" and db_task.creator_id != current_user.id:
         raise HTTPException(status_code=403, detail="Insufficient permissions.")
-    for path_col in [db_task.file_path, db_task.bronze_file_path, db_task.silver_file_path, db_task.gold_file_path]:
-        if path_col and os.path.exists(path_col):
-            os.remove(path_col)
+    for filename in [db_task.file_path, db_task.bronze_file_path, db_task.silver_file_path, db_task.gold_file_path]:
+        if filename:
+            full = UPLOAD_DIR / filename
+            if full.exists():
+                full.unlink()
     db.delete(db_task)
     db.commit()
     return {"message": "Task deleted successfully."}
@@ -231,22 +231,20 @@ def apply_transformation(
         raise HTTPException(status_code=403, detail="This task is not assigned to you.")
     if not db_task.file_path:
         raise HTTPException(status_code=400, detail="No CSV file is attached to this task.")
-    if not os.path.exists(db_task.file_path):
+    full_path = UPLOAD_DIR / db_task.file_path
+    if not full_path.exists():
         raise HTTPException(status_code=404, detail="File not found on server.")
 
     try:
-        result = transform(db_task.file_path, layer)
+        result = transform(str(full_path), layer)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Transformation failed: {e}")
 
-
     original_stem = Path(db_task.file_path).stem
     output_filename = f"{original_stem}_{layer}.csv"
-    output_path = UPLOAD_DIR / output_filename
-    pd.DataFrame(result["data"]).to_csv(output_path, index=False)
+    pd.DataFrame(result["data"]).to_csv(UPLOAD_DIR / output_filename, index=False)
 
-
-    setattr(db_task, f"{layer}_file_path", str(output_path))
+    setattr(db_task, f"{layer}_file_path", output_filename)
     db.commit()
 
     result["saved_as"] = output_filename

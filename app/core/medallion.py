@@ -1,8 +1,16 @@
+import json
 from datetime import datetime, timezone
 
+import numpy as np
 import pandas as pd
 
 VALID_LAYERS = {"bronze", "silver", "gold"}
+
+
+def _safe_records(df: pd.DataFrame) -> list:
+    """Convert DataFrame to records — NaN/inf → null, numpy types → Python native."""
+    cleaned = df.replace([np.inf, -np.inf], np.nan)
+    return json.loads(cleaned.to_json(orient="records"))
 
 def apply_bronze(df: pd.DataFrame) -> dict:
     df = df.copy()
@@ -14,7 +22,7 @@ def apply_bronze(df: pd.DataFrame) -> dict:
         "row_count": len(df),
         "column_count": len(df.columns),
         "ingest_timestamp": df["_ingest_timestamp"].iloc[0],
-        "data": df.to_dict(orient="records"),
+        "data": _safe_records(df),
     }
 
 
@@ -26,8 +34,9 @@ def apply_silver(df: pd.DataFrame) -> dict:
     duplicates_removed = rows_before - len(df)
 
     for col in df.columns:
-        if pd.api.types.is_numeric_dtype(df[col]):            
-            df[col] = df[col].fillna(df[col].mean())
+        if pd.api.types.is_numeric_dtype(df[col]):
+            mean_val = df[col].mean()
+            df[col] = df[col].fillna(mean_val if pd.notna(mean_val) else 0)
         else:
             df[col] = df[col].fillna("Unknown")
 
@@ -42,7 +51,7 @@ def apply_silver(df: pd.DataFrame) -> dict:
         "row_count": len(df),
         "column_count": len(df.columns),
         "duplicates_removed": duplicates_removed,
-        "data": df.to_dict(orient="records"),
+        "data": _safe_records(df),
     }
 
 
@@ -79,7 +88,7 @@ def apply_gold(df: pd.DataFrame) -> dict:
         "row_count": len(df_clean),
         "numeric_summary": numeric_summary,
         "text_summary": text_summary,
-        "data": df_clean.to_dict(orient="records"),
+        "data": _safe_records(df_clean),
     }
 
 
