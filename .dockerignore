@@ -1,0 +1,8 @@
+myenv/
+uploads/
+.env
+__pycache__/
+*.pyc
+*.pyo
+.git/
+sample_data*.csv

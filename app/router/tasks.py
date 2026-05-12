@@ -194,8 +194,6 @@ def update_status(
 
 # ─────────────────────────── Developer endpoints ──────────────────────────
 
-# NOTE: /assigned MUST be declared before /{task_id} to prevent FastAPI
-# treating "assigned" as an integer path parameter.
 @router.get("/assigned", response_model=list[TaskOut], summary="Developer dashboard — assigned tasks")
 def developer_dashboard(
     status: Optional[str] = Query(None, description="Filter by status"),
@@ -245,7 +243,7 @@ def apply_transformation(
     pd.DataFrame(result["data"]).to_csv(UPLOAD_DIR / output_filename, index=False)
     setattr(db_task, f"{layer}_file_path", output_filename)
 
-    # Gold internally applies silver — save that intermediate file too
+    
     if layer == "gold" and not db_task.silver_file_path:
         try:
             silver_result = transform(str(full_path), "silver")
